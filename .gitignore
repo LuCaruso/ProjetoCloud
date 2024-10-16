@@ -1,0 +1,13 @@
+# Excluir o arquivo .env com variáveis sensíveis
+.env
+
+# Pastas de ambientes virtuais
+venv/
+env/
+.venv/
+.env/
+
+*.db
+
+# pycache   
+__pycache__/
