@@ -1,0 +1,25 @@
+services:
+  app:
+    image: fastapi_app
+    build:
+      context: ./app
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-projeto}
+      POSTGRES_USER: ${DATABASE_USER:-projeto}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-projeto}
+      
+      SECRET_KEY: ${SECRET_KEY:-a5e6fda737aa4c22a9e80fb273aec1455a2bfc4854905ee0a2d5747b8272d6d5}
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      DATABASE_URL: postgresql://${DATABASE_USER:-projeto}:${DATABASE_PASSWORD:-projeto}@${DATABASE_HOST:-db}:5432/${DATABASE_NAME:-projeto}
+
+ 
