@@ -40,8 +40,12 @@ Consultando a cotação
 
     [![Baixar YAML](https://img.shields.io/badge/Baixar-YAML-blue?style=for-the-badge&logo=download&logoColor=white)](./compose.yaml)
 
+   Você também pode baixar a imagem do Docker Hub através deste comando:
+   ```bash
+   docker pull lc2020/projeto_cloud_lucac:v5
+   ```
 
-2. Configure o arquivo .env com suas credenciais:[OPCIONAL]
+3. Configure o arquivo .env com suas credenciais:[OPCIONAL]
    ```bash
     DATABASE_PASSWORD=<sua senha>
     DATABASE_USER=<seu usuario>
