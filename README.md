@@ -57,7 +57,32 @@ Consultando a cotação
 | `GET`   | `/consultar/`  | Consultar a cotação de uma empresa |
 
 ## 📊 Diagramas de Fluxo (Mermaid)
-
+```mermaid
+sequenceDiagram
+    participant Usuário
+    participant API
+    participant BancoDeDados
+    Usuário->>API: POST /registrar
+    API->>BancoDeDados: Verifica se email já existe
+    alt Email já registrado
+        API->>Usuário: 409 Email já registrado
+    else
+        API->>BancoDeDados: Cria novo usuário
+        BancoDeDados->>API: Usuário criado
+        API->>Usuário: JWT Token (usuário registrado)
+    end
+    
+    Usuário->>API: POST /login
+    API->>BancoDeDados: Verifica credenciais
+    BancoDeDados->>API: Credenciais válidas
+    API->>Usuário: JWT Token (login)
+    
+    Usuário->>API: GET /consultar?empresa=XYZ
+    API->>BancoDeDados: Verifica usuário com token
+    BancoDeDados->>API: Usuário encontrado
+    API->>API: Consulta dados da empresa
+    API->>Usuário: Retorna dados da empresa (cotação)
+```
 ### Explicação do fluxo:
 
 - **Registro**:
@@ -119,28 +144,4 @@ Consultando a cotação
   ```
 
 
-```mermaid
-sequenceDiagram
-    participant Usuário
-    participant API
-    participant BancoDeDados
-    Usuário->>API: POST /registrar
-    API->>BancoDeDados: Verifica se email já existe
-    alt Email já registrado
-        API->>Usuário: 409 Email já registrado
-    else
-        API->>BancoDeDados: Cria novo usuário
-        BancoDeDados->>API: Usuário criado
-        API->>Usuário: JWT Token (usuário registrado)
-    end
-    
-    Usuário->>API: POST /login
-    API->>BancoDeDados: Verifica credenciais
-    BancoDeDados->>API: Credenciais válidas
-    API->>Usuário: JWT Token (login)
-    
-    Usuário->>API: GET /consultar?empresa=XYZ
-    API->>BancoDeDados: Verifica usuário com token
-    BancoDeDados->>API: Usuário encontrado
-    API->>API: Consulta dados da empresa
-    API->>Usuário: Retorna dados da empresa (cotação)
+
