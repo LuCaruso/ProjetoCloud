@@ -29,6 +29,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Autenticação com Bearer Token (JWT) no header
 bearer_scheme = HTTPBearer()
+
 # Dependência para verificar o token JWT e retornar o usuário
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme), db: Session = Depends(get_db)):
     token = credentials.credentials
@@ -42,7 +43,6 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(b
             raise HTTPException(status_code=403, detail="Token inválido")
     except jwt.PyJWTError:
         raise HTTPException(status_code=403, detail="Token inválido")
-
     # Aqui você pode buscar o usuário no banco de dados se necessário
     if user is None:
         raise HTTPException(status_code=403, detail="Usuário não encontrado")

@@ -15,10 +15,10 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copie o restante dos arquivos da aplicação para a imagem
-COPY . .
+COPY . /app
 
 # Exponha a porta que a aplicação usará
 EXPOSE 8000
 
 # Comando para rodar a aplicação usando uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["fastapi", "run", "main.py", "--host", "0.0.0.0", "--port", "8000"]
