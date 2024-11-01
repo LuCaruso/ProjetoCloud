@@ -1,6 +1,9 @@
 # Projeto Computação em Nuvem - Insper 2024.2
 **Feito por Luca Caruso**
 
+**Link para o DockerHub do projeto:**
+https://hub.docker.com/repository/docker/lc2020/projeto_cloud_lucac/general
+
 **Projeto: Consulta de Cotações e Gerenciamento de Usuários com FastAPI**
 
 ## 📄 Explicação do Projeto
