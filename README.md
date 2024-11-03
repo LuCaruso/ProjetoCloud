@@ -144,3 +144,219 @@ sequenceDiagram
     BancoDeDados->>API: Usuário encontrado
     API->>API: Consulta dados da empresa
     API->>Usuário: Retorna dados da empresa (cotação)
+```
+
+
+# 🌐 AWS
+
+## 🔗 Acesso à API
+
+Após concluir a configuração do cluster e o deploy da aplicação, você pode acessar a API através do seguinte link:
+[Link da API](http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com)
+
+http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com
+
+Para testar a API de forma interativa, utilize o Swagger:
+[Swagger - Documentação Interativa](http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/docs)
+
+## 🚀 Tutorial para Subir um Cluster no AWS
+
+Este guia explica detalhadamente como subir um cluster no AWS, passo a passo. Ele inclui a instalação de ferramentas necessárias, configuração do ambiente e comandos para a criação e deploy dos recursos.
+
+## 1. Instalação do AWS CLI 🛠️
+
+O AWS CLI é uma ferramenta que permite interagir com os serviços da AWS diretamente pelo terminal. Baixe e instale o AWS CLI através da [documentação oficial](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+
+Verifique a instalação executando no terminal:
+```bash
+aws --version
+```
+O resultado esperado deve ser semelhante a:
+```bash
+aws-cli/2.17.20 Python/3.11.6 Windows/10 exe/AMD64 prompt/off
+```
+
+## 2. Criação de Chave de Acesso 🔑
+
+As chaves de acesso são necessárias para que o CLI possa autenticar e executar comandos na sua conta AWS. Para gerar uma chave:
+- Acesse o console IAM: [IAM Console](https://us-east-1.console.aws.amazon.com/iam/home?region=us-east-1#/users)
+- Entre no seu usuário e vá para `Credenciais de Segurança > Chaves de Acesso`.
+- Clique em `Criar chave de acesso`.
+- Escolha `Interface de linha de comandos (CLI)` e prossiga.
+- Faça o download do arquivo `.csv` com suas credenciais.
+
+## 3. Configuração do AWS CLI ⚙️
+
+O comando `aws configure` permite configurar suas credenciais para que a AWS CLI possa autenticar suas requisições.
+No terminal, digite o comando:
+```bash
+aws configure
+```
+Preencha as credenciais conforme o arquivo `.csv` gerado anteriormente.
+
+Para mais informações, consulte a [documentação oficial](https://docs.aws.amazon.com/pt_br/eks/latest/userguide/install-awscli.html).
+
+## 4. Instalação do EKSCTL 🛡️
+
+O `eksctl` é uma ferramenta de linha de comando específica para criar e gerenciar clusters do Amazon EKS.
+Instale o `eksctl` para configurar o EKS via CLI:
+```bash
+choco install eksctl
+```
+
+**Observação**: Este comando deve ser executado com `permissões de administrador`.
+
+
+Mais detalhes estão disponíveis na [documentação oficial do EKSCTL](https://eksctl.io/installation/).
+
+## 5. Criação do Cluster 🏗️
+
+Nesta etapa, você criará um cluster EKS com dois nós:
+```bash
+eksctl create cluster --name app-cluster --region us-east-1 --nodes 2
+```
+
+Depois, atualize a configuração do `kubeconfig` para que o `kubectl` possa se conectar ao cluster:
+```bash
+aws eks --region us-east-1 update-kubeconfig --name app-cluster
+```
+
+## 6. Criação do Arquivo `db-deployment.yaml` 📄
+
+O arquivo `db-deployment.yaml` é um manifesto Kubernetes que define os recursos necessários para o deploy do banco de dados. Certifique-se de substituir as variáveis de ambiente conforme necessário.
+
+Aqui está um exemplo do `db-deployment.yaml`:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:17
+        env:
+          - name: POSTGRES_USER
+            value: "projeto"
+          - name: POSTGRES_PASSWORD
+            value: "projeto"
+          - name: POSTGRES_DB
+            value: "projeto"
+        ports:
+          - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: postgres
+```
+
+## 7. Criação do Arquivo `web-deployment.yaml` 🌐
+
+Da mesma forma, o `web-deployment.yaml` é um arquivo que contém as definições para o deploy do aplicativo web. Atualize a imagem e as variáveis de ambiente de acordo com as suas necessidades.
+
+Aqui está um exemplo do `web-deployment.yaml`:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: lc2020/projeto_cloud_lucac:v5
+        env:
+          - name: SECRET_KEY 
+            value: a5e6fda737aa4c22a9e80fb273aec1455a2bfc4854905ee0a2d5747b8272d6d5
+          - name: DATABASE_HOST
+            value: postgres
+          - name: DATABASE_NAME
+            value: projeto
+          - name: DATABASE_USER
+            value: projeto
+          - name: DATABASE_PASSWORD
+            value: projeto
+        ports:
+          - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8000
+  selector:
+    app: fastapi
+```
+
+
+## 8. Aplicação dos Arquivos de Deploy 📦
+
+Para aplicar as configurações e fazer o deploy dos recursos, navegue até a pasta onde os arquivos `.yaml` foram criados e execute:
+```bash
+kubectl apply -f db-deployment.yaml kubectl apply -f web-deployment.yaml
+```
+Este comando criará os recursos no cluster com base nas definições dos arquivos `.yaml`.
+
+## 9. Verificando os Pods em Execução 🔍
+Para verificar os pods em execução no cluster, execute:
+```bash
+kubectl get pods
+```
+Este comando listará todos os pods em execução, juntamente com seus status.
+Se tuodo estiver certo os `status` aparacerão como `Running`
+
+```bash
+NAME                        READY   STATUS    RESTARTS   AGE
+fastapi-f6867768c-rlqbv     1/1     Running   0          68m
+postgres-795b65b965-sps58   1/1     Running   0          21h
+```
+
+## 10. Visualizando Logs para Depuração 🛠️
+Para visualizar os logs de um pod específico, primeiro obtenha o nome do pod usando o comando kubectl get pods. Em seguida, execute:
+```bash
+kubectl logs <nome-do-pod>
+```
+Substitua `<nome-do-pod>` pelo nome do pod que você deseja inspecionar. Este comando exibirá os logs do pod, que podem ser úteis para depuração.
+
+**Observação:** O nome do pod foi obtido na sessão anterior
+
+## 11. Obtenção do Link de Acesso 🔗
+
+Para acessar a aplicação via Load Balancer e obter o URL de serviço, execute:
+```bash
+kubectl get svc fastapi-service
+```
+Este comando retornará detalhes do serviço, incluindo o endereço de IP externo ou URL.
+Use o URL fornecido para fazer as requisições via `Postman` ou `CURL`, ou acesse o link no navegador incluindo `/docs` no final para poder testar a aplicação no `Swagger`.
+
+
+
+
+

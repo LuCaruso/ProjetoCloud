@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: lc2020/projeto_cloud_lucac:v5
+        env:
+          - name: SECRET_KEY 
+            value: a5e6fda737aa4c22a9e80fb273aec1455a2bfc4854905ee0a2d5747b8272d6d5
+          - name: DATABASE_HOST
+            value: postgres
+          - name: DATABASE_NAME
+            value: projeto
+          - name: DATABASE_USER
+            value: projeto
+          - name: DATABASE_PASSWORD
+            value: projeto
+        ports:
+          - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8000
+  selector:
+    app: fastapi
+    
