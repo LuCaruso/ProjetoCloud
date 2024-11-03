@@ -1,6 +1,9 @@
 # Projeto Computação em Nuvem - Insper 2024.2
 **Feito por Luca Caruso**
 
+**Link para o DockerHub do projeto:**
+[Repositório Docker Hub](https://hub.docker.com/repository/docker/lc2020/projeto_cloud_lucac/general)
+
 **Projeto: Consulta de Cotações e Gerenciamento de Usuários com FastAPI**
 
 ## 📄 Explicação do Projeto
@@ -40,8 +43,12 @@ Consultando a cotação
 
     [![Baixar YAML](https://img.shields.io/badge/Baixar-YAML-blue?style=for-the-badge&logo=download&logoColor=white)](./compose.yaml)
 
+   Você também pode baixar a imagem do Docker Hub através deste comando:
+   ```bash
+   docker pull lc2020/projeto_cloud_lucac:v5
+   ```
 
-2. Configure o arquivo .env com suas credenciais:[OPCIONAL]
+3. Configure o arquivo .env com suas credenciais:[OPCIONAL]
    ```bash
     DATABASE_PASSWORD=<sua senha>
     DATABASE_USER=<seu usuario>
@@ -57,7 +64,32 @@ Consultando a cotação
 | `GET`   | `/consultar/`  | Consultar a cotação de uma empresa |
 
 ## 📊 Diagramas de Fluxo (Mermaid)
-
+```mermaid
+sequenceDiagram
+    participant Usuário
+    participant API
+    participant BancoDeDados
+    Usuário->>API: POST /registrar
+    API->>BancoDeDados: Verifica se email já existe
+    alt Email já registrado
+        API->>Usuário: 409 Email já registrado
+    else
+        API->>BancoDeDados: Cria novo usuário
+        BancoDeDados->>API: Usuário criado
+        API->>Usuário: JWT Token (usuário registrado)
+    end
+    
+    Usuário->>API: POST /login
+    API->>BancoDeDados: Verifica credenciais
+    BancoDeDados->>API: Credenciais válidas
+    API->>Usuário: JWT Token (login)
+    
+    Usuário->>API: GET /consultar?empresa=XYZ
+    API->>BancoDeDados: Verifica usuário com token
+    BancoDeDados->>API: Usuário encontrado
+    API->>API: Consulta dados da empresa
+    API->>Usuário: Retorna dados da empresa (cotação)
+```
 ### Explicação do fluxo:
 
 - **Registro**:
