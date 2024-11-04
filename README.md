@@ -388,7 +388,22 @@ kubectl get svc fastapi-service
 Este comando retornará detalhes do serviço, incluindo o endereço de IP externo ou URL.
 Use o URL fornecido para fazer as requisições via `Postman` ou `CURL`, ou acesse o link no navegador incluindo `/docs` no final para poder testar a aplicação no `Swagger`.
 
+## 🛠️ Comandos CURL para Testar a Aplicação
 
+### REGISTRAR
+```bash
+curl -X POST "http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/registrar/" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"nome\": \"Disciplina Cloud\", \"email\": \"cloud@insper.edu.br\", \"senha\": \"cloud0\"}"
+```
+
+### LOGIN
+```bash
+curl -X POST "http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/login/" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"email\": \"cloud@insper.edu.br\", \"senha\": \"cloud0\"}"
+```
+
+### CONSULTA
+```bash
+curl -X GET "http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/consultar/?empresa=AAPL" -H "accept: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsIm5hbWUiOiJEaXNjaXBsaW5hIENsb3VkIiwiaWF0IjoxNzMwNjk4MzcyfQ.KrHyAc3GRbToDcE28qamN4IaGYoRsAtZFrSL0IfruAA"
+```
 
 
 
