@@ -184,12 +184,10 @@ sequenceDiagram
 ## 🔗 Acesso à API
 
 Após concluir a configuração do cluster e o deploy da aplicação, você pode acessar a API através do seguinte link:
-[Link da API](a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com)
-
 a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com
 
 Para testar a API de forma interativa, utilize o Swagger:
-[Swagger - Documentação Interativa](a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com/docs)
+a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com/docs
 
 ## 🚀 Tutorial para Subir um Cluster no AWS
 
