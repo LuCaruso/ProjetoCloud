@@ -367,8 +367,8 @@ Se tuodo estiver certo os `status` aparacerão como `Running`
 
 ```bash
 NAME                        READY   STATUS    RESTARTS   AGE
-fastapi-f6867768c-rlqbv     1/1     Running   0          68m
-postgres-795b65b965-sps58   1/1     Running   0          21h
+fastapi-f6867768c-w8hlg     1/1     Running   0          21s
+postgres-795b65b965-776pl   1/1     Running   0          29s
 ```
 
 ## 10. Visualizando Logs para Depuração 🛠️
