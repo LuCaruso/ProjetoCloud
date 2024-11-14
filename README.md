@@ -245,12 +245,12 @@ Mais detalhes estão disponíveis na [documentação oficial do EKSCTL](https://
 
 Nesta etapa, você criará um cluster EKS com dois nós:
 ```bash
-eksctl create cluster --name app-cluster --region us-east-1 --nodes 2
+eksctl create cluster --name app-consultaCotacao --region us-east-1 --nodes 2 --node-type t3.medium
 ```
 
 Depois, atualize a configuração do `kubeconfig` para que o `kubectl` possa se conectar ao cluster:
 ```bash
-aws eks --region us-east-1 update-kubeconfig --name app-cluster
+aws eks --region us-east-1 update-kubeconfig --name app-consultaCotacao
 ```
 
 ## 6. Criação do Arquivo `db-deployment.yaml` 📄
