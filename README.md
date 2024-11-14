@@ -184,12 +184,12 @@ sequenceDiagram
 ## 🔗 Acesso à API
 
 Após concluir a configuração do cluster e o deploy da aplicação, você pode acessar a API através do seguinte link:
-[Link da API](http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com)
+[Link da API](a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com)
 
-http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com
+a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com
 
 Para testar a API de forma interativa, utilize o Swagger:
-[Swagger - Documentação Interativa](http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/docs)
+[Swagger - Documentação Interativa](a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com/docs)
 
 ## 🚀 Tutorial para Subir um Cluster no AWS
 
@@ -393,17 +393,17 @@ Use o URL fornecido para fazer as requisições via `Postman` ou `CURL`, ou aces
 
 ### Registrar
 ```bash
-curl -X POST "http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/registrar/" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"nome\": \"Disciplina Cloud\", \"email\": \"cloud@insper.edu.br\", \"senha\": \"cloud0\"}"
+curl -X POST "a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com/registrar/" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"nome\": \"Disciplina Cloud\", \"email\": \"cloud@insper.edu.br\", \"senha\": \"cloud0\"}"
 ```
 
 ### Login
 ```bash
-curl -X POST "http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/login/" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"email\": \"cloud@insper.edu.br\", \"senha\": \"cloud0\"}"
+curl -X POST "a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com/login/" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"email\": \"cloud@insper.edu.br\", \"senha\": \"cloud0\"}"
 ```
 
 ### Consulta
 ```bash
-curl -X GET "http://a78ad507004aa49c3ad2bc0c8b46ad44-1107120763.us-east-1.elb.amazonaws.com/consultar/?empresa=AAPL" -H "accept: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsIm5hbWUiOiJEaXNjaXBsaW5hIENsb3VkIiwiaWF0IjoxNzMwNjk4MzcyfQ.KrHyAc3GRbToDcE28qamN4IaGYoRsAtZFrSL0IfruAA"
+curl -X GET "a89e5f05521544dafbae1856f247081d-838556397.us-east-1.elb.amazonaws.com/consultar/?empresa=AAPL" -H "accept: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsIm5hbWUiOiJEaXNjaXBsaW5hIENsb3VkIiwiaWF0IjoxNzMwNjk4MzcyfQ.KrHyAc3GRbToDcE28qamN4IaGYoRsAtZFrSL0IfruAA"
 ```
 
 
