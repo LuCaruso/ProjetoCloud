@@ -352,7 +352,8 @@ spec:
 
 Para aplicar as configurações e fazer o deploy dos recursos, navegue até a pasta onde os arquivos `.yaml` foram criados e execute:
 ```bash
-kubectl apply -f db-deployment.yaml kubectl apply -f web-deployment.yaml
+kubectl apply -f db-deployment.yaml 
+kubectl apply -f web-deployment.yaml
 ```
 Este comando criará os recursos no cluster com base nas definições dos arquivos `.yaml`.
 
