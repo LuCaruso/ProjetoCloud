@@ -256,6 +256,7 @@ aws eks --region us-east-1 update-kubeconfig --name app-consultaCotacao
 ## 6. Criação do Arquivo `db-deployment.yaml` 📄
 
 O arquivo `db-deployment.yaml` é um manifesto Kubernetes que define os recursos necessários para o deploy do banco de dados. Certifique-se de substituir as variáveis de ambiente conforme necessário.
+Você pode baixar o arquivo `db-deployment.yaml` [clicando aqui](./db-deployment.yaml).
 
 Aqui está um exemplo do `db-deployment.yaml`:
 ```yaml
@@ -300,6 +301,7 @@ spec:
 ## 7. Criação do Arquivo `web-deployment.yaml` 🌐
 
 Da mesma forma, o `web-deployment.yaml` é um arquivo que contém as definições para o deploy do aplicativo web. Atualize a imagem e as variáveis de ambiente de acordo com as suas necessidades.
+Você pode baixar o arquivo `web-deployment.yaml` [clicando aqui](./web-deployment.yaml).
 
 Aqui está um exemplo do `web-deployment.yaml`:
 ```yaml
