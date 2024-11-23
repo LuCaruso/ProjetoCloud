@@ -181,6 +181,12 @@ sequenceDiagram
 
 # 🌐 AWS
 
+## 🎥 Demonstração do Projeto
+
+Confira o vídeo de demonstração do projeto rodando no link abaixo:
+**[Assista no YouTube](https://youtu.be/J1nMj6zZdxc)**
+[![Assista no YouTube](https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png)](https://youtu.be/J1nMj6zZdxc)
+
 ## 🔗 Acesso à API
 
 Após concluir a configuração do cluster e o deploy da aplicação, você pode acessar a **API** através do seguinte link:
